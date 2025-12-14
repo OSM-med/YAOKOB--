@@ -8,24 +8,26 @@
     <style>
         body {
             margin: 0;
-            padding: 20px;
+            padding: 16px;
             font-family: Arial, sans-serif;
-            background-color: #fdfdfd;
+            background-color: #ffffff;
             color: #111;
         }
 
-        /* Поисковик */
+        /* ===== Поисковая строка ===== */
         .search-container {
             max-width: 720px;
-            margin: 30px auto 40px auto;
+            margin: 20px auto 36px auto;
             position: relative;
+            padding: 0 4px; /* важно для телефонов */
         }
 
         .search-container input {
             width: 100%;
-            padding: 14px 18px 14px 46px;
-            font-size: 18px;
-            border-radius: 30px;
+            box-sizing: border-box;
+            padding: 14px 18px 14px 44px;
+            font-size: 17px;
+            border-radius: 28px;
             border: 2px solid #111;
             outline: none;
         }
@@ -33,38 +35,53 @@
         .search-container::before {
             content: "🔍";
             position: absolute;
-            left: 16px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 20px;
+            font-size: 18px;
         }
 
-        /* Сетка карточек */
+        /* ===== Сетка иконок ===== */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 18px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        /* ===== Карточка заболевания ===== */
         .card {
-            border: 2px solid #111;
+            background-color: #111;
+            color: #ffffff;
+            border-radius: 14px;
             padding: 22px 16px;
             text-align: center;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            background-color: #fff;
             text-decoration: none;
-            color: #111;
+            transition: 0.2s ease;
         }
 
         .card:hover {
-            background-color: #111;
-            color: #fff;
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* ===== Адаптация под телефон ===== */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .grid {
+                gap: 14px;
+            }
+
+            .card {
+                font-size: 16px;
+                padding: 20px 14px;
+            }
         }
     </style>
 </head>
@@ -76,32 +93,45 @@
         <input type="text" id="searchInput" placeholder="Введите название заболевания">
     </div>
 
-    <!-- Карточки заболеваний -->
+    <!-- Иконки заболеваний -->
     <div class="grid" id="pathologyGrid">
 
+        <!-- А -->
         <div class="card">Аденокарцинома желудка</div>
         <div class="card">Аденокарцинома пищевода</div>
+
+        <!-- Б -->
         <div class="card">Бронхолёгочный рак</div>
+
+        <!-- Г -->
         <div class="card">Гепатоцеллюлярный рак</div>
+
+        <!-- К -->
         <div class="card">Колоректальный рак</div>
         <div class="card">Карцинома поджелудочной железы</div>
+
+        <!-- М -->
         <div class="card">Меланома</div>
-        <div class="card">Рак желудка</div>
+
+        <!-- Р -->
+        <a href="rak-zheludka.html" class="card">Рак желудка</a>
         <div class="card">Рак лёгкого</div>
         <div class="card">Рак молочной железы</div>
         <div class="card">Рак пищевода</div>
         <div class="card">Рак предстательной железы</div>
+
+        <!-- Я -->
         <div class="card">Яичниковый рак</div>
 
     </div>
 
-    <!-- Поиск -->
+    <!-- Логика поиска -->
     <script>
         const searchInput = document.getElementById("searchInput");
         const cards = document.querySelectorAll(".card");
 
         searchInput.addEventListener("input", function () {
-            const value = this.value.toLowerCase();
+            const value = this.value.toLowerCase().trim();
 
             cards.forEach(card => {
                 const text = card.textContent.toLowerCase();
