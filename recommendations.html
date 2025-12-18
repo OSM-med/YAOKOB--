@@ -19,7 +19,7 @@
             max-width: 720px;
             margin: 20px auto 36px auto;
             position: relative;
-            padding: 0 4px; /* важно для телефонов */
+            padding: 0 4px;
         }
 
         .search-container input {
@@ -50,7 +50,7 @@
             margin: 0 auto;
         }
 
-        /* ===== Карточка заболевания ===== */
+        /* ===== Карточка заболевания (ССЫЛКА) ===== */
         .card {
             background-color: #111;
             color: #ffffff;
@@ -61,6 +61,7 @@
             font-weight: 800;
             text-decoration: none;
             transition: 0.2s ease;
+            display: block;
         }
 
         .card:hover {
@@ -70,18 +71,9 @@
 
         /* ===== Адаптация под телефон ===== */
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
-
-            .grid {
-                gap: 14px;
-            }
-
-            .card {
-                font-size: 16px;
-                padding: 20px 14px;
-            }
+            body { padding: 12px; }
+            .grid { gap: 14px; }
+            .card { font-size: 16px; padding: 20px 14px; }
         }
     </style>
 </head>
@@ -97,31 +89,31 @@
     <div class="grid" id="pathologyGrid">
 
         <!-- А -->
-        <div class="card">Аденокарцинома желудка</div>
-        <div class="card">Аденокарцинома пищевода</div>
+        <a href="pathology.html?p=adenokarcinoma-zheludka" class="card">Аденокарцинома желудка</a>
+        <a href="pathology.html?p=adenokarcinoma-pischevoda" class="card">Аденокарцинома пищевода</a>
 
         <!-- Б -->
-        <div class="card">Бронхолёгочный рак</div>
+        <a href="pathology.html?p=bronholegochny-rak" class="card">Бронхолёгочный рак</a>
 
         <!-- Г -->
-        <div class="card">Гепатоцеллюлярный рак</div>
+        <a href="pathology.html?p=gepatozellulyarny-rak" class="card">Гепатоцеллюлярный рак</a>
 
         <!-- К -->
-        <div class="card">Колоректальный рак</div>
-        <div class="card">Карцинома поджелудочной железы</div>
+        <a href="pathology.html?p=kolorektalny-rak" class="card">Колоректальный рак</a>
+        <a href="pathology.html?p=karcinoma-podzheludochnoy" class="card">Карцинома поджелудочной железы</a>
 
         <!-- М -->
-        <div class="card">Меланома</div>
+        <a href="pathology.html?p=melanoma" class="card">Меланома</a>
 
         <!-- Р -->
-        <a href="rak-zheludka.html" class="card">Рак желудка</a>
-        <div class="card">Рак лёгкого</div>
-        <div class="card">Рак молочной железы</div>
-        <div class="card">Рак пищевода</div>
-        <div class="card">Рак предстательной железы</div>
+        <a href="pathology.html?p=rak-zheludka" class="card">Рак желудка</a>
+        <a href="pathology.html?p=rak-legkogo" class="card">Рак лёгкого</a>
+        <a href="pathology.html?p=rak-molochnoy-zhelezy" class="card">Рак молочной железы</a>
+        <a href="pathology.html?p=rak-pischevoda" class="card">Рак пищевода</a>
+        <a href="pathology.html?p=rak-predstatelnoy-zhelezy" class="card">Рак предстательной железы</a>
 
         <!-- Я -->
-        <div class="card">Яичниковый рак</div>
+        <a href="pathology.html?p=yaichnikovyi-rak" class="card">Яичниковый рак</a>
 
     </div>
 
