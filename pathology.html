@@ -263,6 +263,9 @@
       distal: "diet-distal.html"
     };
 
+    // ✅ новый файл активности (единый для всех операций при раке желудка)
+    const ACTIVITY_PAGE = "activity-gastric-postop.html";
+
     const params = new URLSearchParams(window.location.search);
     const key = params.get("p") || "gastric";
 
@@ -277,6 +280,17 @@
       el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
+    function currentReturnUrl() {
+      // вернёмся сюда же: pathology.html?p=gastric (и т.д.)
+      const file = window.location.pathname.split("/").pop() || "pathology.html";
+      return file + window.location.search;
+    }
+
+    function openActivityForGastric() {
+      // открываем единый файл активности и передаём return
+      window.location.href = ACTIVITY_PAGE + "?return=" + encodeURIComponent(currentReturnUrl());
+    }
+
     function renderOperationSelector() {
       contentEl.innerHTML = `
         <h2>Рекомендации после хирургического лечения</h2>
@@ -284,7 +298,7 @@
         <div class="op-wrap" id="opWrap">
           <div class="op-box">
 
-            <!-- ✅ ЖЕЛЕЗОБЕТОН: inline-стиль, не зависит от обновления CSS -->
+            <!-- ✅ “ЖЕЛЕЗОБЕТОН”: заголовок в рамке -->
             <div class="op-title" style="
               text-align:center;
               font-size:18px;
@@ -361,21 +375,20 @@
 
           const sec = btn.dataset.post;
 
+          // ✅ ВАЖНО: активность после ЛЮБОЙ операции при РЖ -> отдельный файл
+          if (sec === "activity" && key === "gastric") {
+            openActivityForGastric();
+            return;
+          }
+
+          // питание для distal — отдельной страницей
           if (sec === "nutrition" && opKey === "distal") {
             window.location.href = DIET_PAGES.distal + "?from=pathology&p=" + encodeURIComponent(key);
             return;
           }
 
-          if (sec === "activity") {
-            postContent.innerHTML = `
-              <h2>Физическая активность</h2>
-              <ul>
-                <li>в первые недели — щадящий режим и прогулки по переносимости</li>
-                <li>избегать подъёма тяжестей и резких нагрузок</li>
-                <li>увеличивать активность постепенно, по согласованию с врачом</li>
-              </ul>
-            `;
-          } else if (sec === "meds") {
+          // остальное — заглушки (как было)
+          if (sec === "meds") {
             postContent.innerHTML = `
               <h2>Лекарственные препараты</h2>
               <ul>
@@ -393,6 +406,8 @@
                 <li>при нарастании боли, температуре, рвоте, чёрном стуле, выраженной слабости — обратиться за медицинской помощью</li>
               </ul>
             `;
+          } else if (sec === "nutrition") {
+            postContent.innerHTML = "<p>Раздел будет добавлен позже.</p>";
           } else {
             postContent.innerHTML = "<p>Раздел будет добавлен позже.</p>";
           }
