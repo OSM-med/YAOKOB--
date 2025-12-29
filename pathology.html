@@ -6,174 +6,191 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root{
-      --border: #8fbce6;
-      --soft: #f4f9ff;
+      --border:#8fbce6;
+      --soft:#f4f9ff;
       --soft2:#e9f3ff;
-      --text: #111;
-      --shadow: 0 8px 20px rgba(0,0,0,0.06);
+      --text:#111;
+      --shadow:0 8px 20px rgba(0,0,0,0.06);
+      --opBlue:#5aa7de;
+      --opText:#0b2a44;
     }
 
-    body {
-      margin: 0;
-      padding: 16px;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    body{
+      margin:0;
+      padding:16px;
+      font-family:Arial, sans-serif;
+      background:#ffffff;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    .container { max-width: 980px; margin: 0 auto; }
+    .container{ max-width:980px; margin:0 auto; }
 
-    .back-link {
-      display: inline-block;
-      margin-bottom: 18px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    /* Заголовок страницы (тоже заголовок, но не внутри контента) */
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      font-weight: 900;
-      margin: 6px 0 18px 0;
-      letter-spacing: 0.2px;
+    .back-link{
+      display:inline-block;
+      margin-bottom:18px;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700;
     }
 
-    .question-box {
-      background-color: var(--soft);
-      border: 2px solid var(--border);
-      border-radius: 18px;
-      padding: 22px 18px;
-      margin-bottom: 22px;
+    /* Заголовок страницы */
+    h1{
+      text-align:center;
+      font-size:24px;
+      font-weight:900;
+      margin:6px 0 18px 0;
+      letter-spacing:0.2px;
     }
 
-    /* “Оглавление”/заголовки блоков */
-    .question-box-title {
-      text-align: center;
-      font-size: 18px;     /* требование */
-      font-weight: 900;
-      margin-bottom: 14px;
-      letter-spacing: 0.2px;
+    /* Универсальные “карточки/рамки” */
+    .question-box{
+      background-color:var(--soft);
+      border:2px solid var(--border);
+      border-radius:18px;
+      padding:22px 18px;
+      margin-bottom:22px;
     }
 
-    .questions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
+    /* “Оглавления/заголовки” */
+    .question-box-title{
+      text-align:center;
+      font-size:18px;   /* требование */
+      font-weight:900;
+      margin-bottom:14px;
+      letter-spacing:0.2px;
+      line-height:1.25;
     }
 
-    .question {
-      background-color: #ffffff;
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 12px;
-      font-size: 16px;     /* основной текст */
-      font-weight: 900;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s ease;
-      user-select: none;
-      line-height: 1.25;
-    }
-    .question:hover { background-color: var(--soft2); transform: translateY(-1px); }
-    .question.active {
-      background-color: #111;
-      color: #ffffff;
-      border-color: #111;
-      transform: none;
+    .questions{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
     }
 
-    .content {
-      background-color: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: var(--shadow);
+    .question{
+      background:#ffffff;
+      border:2px solid var(--border);
+      border-radius:14px;
+      padding:14px 12px;
+      font-size:16px;   /* основной текст */
+      font-weight:900;
+      text-align:center;
+      cursor:pointer;
+      transition:0.2s ease;
+      user-select:none;
+      line-height:1.25;
+    }
+    .question:hover{
+      background:var(--soft2);
+      transform:translateY(-1px);
+    }
+    .question.active{
+      background:#111;
+      color:#fff;
+      border-color:#111;
+      transform:none;
     }
 
-    /* Все заголовки внутри контента = 18px */
-    .content h2 {
-      font-size: 18px;     /* требование */
-      font-weight: 900;
-      margin: 0 0 10px 0;
-      letter-spacing: 0.2px;
+    .content{
+      background:#ffffff;
+      border-radius:16px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    /* Заголовки внутри контента */
+    .content h2{
+      font-size:18px;   /* требование: все оглавления 18 */
+      font-weight:900;
+      margin:0 0 10px 0;
+      letter-spacing:0.2px;
+      line-height:1.25;
     }
 
     /* Основной текст */
-    .content p, .content li {
-      font-size: 16px;     /* требование */
-      line-height: 1.65;
-      margin: 8px 0;
+    .content p,
+    .content li{
+      font-size:16px;   /* требование */
+      line-height:1.65;
+      margin:8px 0;
     }
-    .content ul { padding-left: 18px; margin: 8px 0 0 0; }
+    .content ul{ padding-left:18px; margin:8px 0 0 0; }
 
     /* ===== Окно выбора операции (центрируем) ===== */
-    .op-wrap {
-      display: flex;
-      justify-content: center;
-      margin: 14px 0 0 0;
+    .op-wrap{
+      display:flex;
+      justify-content:center;
+      margin:14px 0 0 0;
     }
 
-    /* СДЕЛАНО: рамка как у остальных элементов */
-    .op-box {
-      width: 100%;
-      max-width: 720px;
-      background: #5aa7de;
-      color: #fff;
-      border: 2px solid var(--border);   /* рамка */
-      border-radius: 18px;               /* как question-box */
-      padding: 18px 16px;
-      box-shadow: var(--shadow);
+    /* Рамка как у остальных элементов */
+    .op-box{
+      width:100%;
+      max-width:720px;
+      background:var(--opBlue);
+      color:#fff;
+      border:2px solid var(--border);   /* рамка */
+      border-radius:18px;
+      padding:18px 16px;
+      box-shadow:var(--shadow);
     }
 
-    .op-title {
-      text-align: center;
-      font-size: 18px;    /* заголовок = 18 */
-      font-weight: 900;
-      margin: 0 0 12px 0;
-      letter-spacing: 0.2px;
+    /* ✅ Исправление: заголовок внутри оп-блока как отдельная “капсула” */
+    .op-title{
+      text-align:center;
+      font-size:18px;   /* требование */
+      font-weight:900;
+      margin:0 0 14px 0;
+      letter-spacing:0.2px;
+      line-height:1.25;
+
+      background:#ffffff;
+      color:var(--opText);
+      border:2px solid var(--border);
+      border-radius:14px;
+      padding:12px 14px;
     }
 
-    .op-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .op-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
     }
 
-    .op-btn {
-      background: transparent;
-      color: #fff;
-      border: 2px solid rgba(255,255,255,0.85);
-      border-radius: 14px;
-      padding: 12px 12px;
-      font-size: 16px;     /* основной текст */
-      font-weight: 900;
-      cursor: pointer;
-      transition: 0.2s ease;
-      line-height: 1.25;
+    .op-btn{
+      background:transparent;
+      color:#fff;
+      border:2px solid rgba(255,255,255,0.85);
+      border-radius:14px;
+      padding:12px 12px;
+      font-size:16px;  /* основной текст */
+      font-weight:900;
+      cursor:pointer;
+      transition:0.2s ease;
+      line-height:1.25;
     }
-    .op-btn:hover {
-      background: rgba(255,255,255,0.14);
-      transform: translateY(-1px);
+    .op-btn:hover{
+      background:rgba(255,255,255,0.14);
+      transform:translateY(-1px);
     }
-    .op-btn.active {
-      background: #ffffff;
-      color: #0b2a44;
-      border-color: #ffffff;
+    .op-btn.active{
+      background:#ffffff;
+      color:var(--opText);
+      border-color:#ffffff;
+      transform:none;
     }
 
     /* ===== Пост-операционные разделы ===== */
-    .postop-wrap {
-      margin-top: 18px;
-    }
+    .postop-wrap{ margin-top:18px; }
 
-    @media (max-width: 480px) {
-      body { padding: 12px; }
-      h1 { font-size: 22px; }
-      .question { font-size: 16px; }
-      .op-btn { font-size: 16px; }
-      .content { padding: 18px; }
+    @media (max-width:480px){
+      body{ padding:12px; }
+      h1{ font-size:22px; }
+      .content{ padding:18px; }
+      .question{ font-size:16px; }
+      .op-btn{ font-size:16px; }
+      .op-title{ font-size:18px; }
     }
   </style>
 </head>
@@ -267,6 +284,7 @@
       }
     };
 
+    // ссылки на отдельные страницы питания
     const DIET_PAGES = {
       distal: "diet-distal.html"
     };
@@ -355,11 +373,13 @@
 
           const sec = btn.dataset.post;
 
+          // питание для distal — отдельной страницей
           if (sec === "nutrition" && opKey === "distal") {
             window.location.href = DIET_PAGES.distal + "?from=pathology&p=" + encodeURIComponent(key);
             return;
           }
 
+          // заглушки
           if (sec === "activity") {
             postContent.innerHTML = `
               <h2>Физическая активность</h2>
@@ -396,6 +416,7 @@
       });
     }
 
+    // инициализация
     if (!DATA[key]) {
       titleEl.textContent = "Раздел в разработке";
       contentEl.innerHTML = "<p>Информация для данной патологии будет добавлена.</p>";
