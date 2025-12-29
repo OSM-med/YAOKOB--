@@ -5,12 +5,22 @@
   <title>Рекомендации</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    :root{
+      --border: #8fbce6;
+      --soft: #f4f9ff;
+      --soft2:#e9f3ff;
+      --text: #111;
+      --shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
     body {
       margin: 0;
       padding: 16px;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
-      color: #111;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .container { max-width: 980px; margin: 0 auto; }
 
@@ -18,30 +28,34 @@
       display: inline-block;
       margin-bottom: 18px;
       text-decoration: none;
-      color: #111;
-      font-weight: 600;
+      color: var(--text);
+      font-weight: 700;
     }
 
+    /* Заголовок страницы (тоже заголовок, но не внутри контента) */
     h1 {
       text-align: center;
-      font-size: 30px;
-      font-weight: 800;
-      margin-bottom: 22px;
+      font-size: 24px;
+      font-weight: 900;
+      margin: 6px 0 18px 0;
+      letter-spacing: 0.2px;
     }
 
     .question-box {
-      background-color: #f4f9ff;
-      border: 2px solid #8fbce6;
+      background-color: var(--soft);
+      border: 2px solid var(--border);
       border-radius: 18px;
       padding: 22px 18px;
       margin-bottom: 22px;
     }
 
+    /* “Оглавление”/заголовки блоков */
     .question-box-title {
       text-align: center;
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 18px;     /* требование */
+      font-weight: 900;
       margin-bottom: 14px;
+      letter-spacing: 0.2px;
     }
 
     .questions {
@@ -52,32 +66,47 @@
 
     .question {
       background-color: #ffffff;
-      border: 2px solid #8fbce6;
+      border: 2px solid var(--border);
       border-radius: 14px;
       padding: 14px 12px;
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 16px;     /* основной текст */
+      font-weight: 900;
       text-align: center;
       cursor: pointer;
       transition: 0.2s ease;
       user-select: none;
+      line-height: 1.25;
     }
-    .question:hover { background-color: #e9f3ff; }
+    .question:hover { background-color: var(--soft2); transform: translateY(-1px); }
     .question.active {
       background-color: #111;
       color: #ffffff;
       border-color: #111;
+      transform: none;
     }
 
     .content {
       background-color: #ffffff;
       border-radius: 16px;
       padding: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
     }
-    .content h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
-    .content p, .content li { font-size: 16px; line-height: 1.6; }
-    .content ul { padding-left: 18px; }
+
+    /* Все заголовки внутри контента = 18px */
+    .content h2 {
+      font-size: 18px;     /* требование */
+      font-weight: 900;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.2px;
+    }
+
+    /* Основной текст */
+    .content p, .content li {
+      font-size: 16px;     /* требование */
+      line-height: 1.65;
+      margin: 8px 0;
+    }
+    .content ul { padding-left: 18px; margin: 8px 0 0 0; }
 
     /* ===== Окно выбора операции (центрируем) ===== */
     .op-wrap {
@@ -85,36 +114,44 @@
       justify-content: center;
       margin: 14px 0 0 0;
     }
+
+    /* СДЕЛАНО: рамка как у остальных элементов */
     .op-box {
       width: 100%;
       max-width: 720px;
       background: #5aa7de;
       color: #fff;
-      border-radius: 18px;
+      border: 2px solid var(--border);   /* рамка */
+      border-radius: 18px;               /* как question-box */
       padding: 18px 16px;
+      box-shadow: var(--shadow);
     }
+
     .op-title {
       text-align: center;
-      font-size: 17px;
+      font-size: 18px;    /* заголовок = 18 */
       font-weight: 900;
       margin: 0 0 12px 0;
       letter-spacing: 0.2px;
     }
+
     .op-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
     }
+
     .op-btn {
       background: transparent;
       color: #fff;
       border: 2px solid rgba(255,255,255,0.85);
       border-radius: 14px;
       padding: 12px 12px;
-      font-size: 15.5px;
+      font-size: 16px;     /* основной текст */
       font-weight: 900;
       cursor: pointer;
       transition: 0.2s ease;
+      line-height: 1.25;
     }
     .op-btn:hover {
       background: rgba(255,255,255,0.14);
@@ -133,9 +170,10 @@
 
     @media (max-width: 480px) {
       body { padding: 12px; }
-      h1 { font-size: 26px; }
-      .question { font-size: 15.5px; }
-      .op-btn { font-size: 15px; }
+      h1 { font-size: 22px; }
+      .question { font-size: 16px; }
+      .op-btn { font-size: 16px; }
+      .content { padding: 18px; }
     }
   </style>
 </head>
@@ -146,7 +184,6 @@
     <a href="recommendations.html" class="back-link">← Вернуться к выбору заболевания</a>
     <h1 id="pathologyTitle">Рекомендации</h1>
 
-    <!-- ВАЖНО: тут больше НЕТ выбора патологии. Только пункты разделов. -->
     <div class="question-box">
       <div class="question-box-title">Выберите, какая информация вам сейчас нужна</div>
 
@@ -230,9 +267,8 @@
       }
     };
 
-    // --- ссылки на отдельные страницы питания ---
     const DIET_PAGES = {
-      distal: "diet-distal.html" // Субтотальная дистальная резекция желудка
+      distal: "diet-distal.html"
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -242,7 +278,6 @@
     const contentEl = document.getElementById("content");
     const questions = document.querySelectorAll("#mainQuestions .question");
 
-    // Состояния, чтобы кнопки “после операции” работали предсказуемо
     let selectedOp = null;
 
     function centerElement(el) {
@@ -320,13 +355,11 @@
 
           const sec = btn.dataset.post;
 
-          // питание для distal — отдельной страницей
           if (sec === "nutrition" && opKey === "distal") {
             window.location.href = DIET_PAGES.distal + "?from=pathology&p=" + encodeURIComponent(key);
             return;
           }
 
-          // остальное — пока заглушки (можешь потом вынести аналогично в файлы)
           if (sec === "activity") {
             postContent.innerHTML = `
               <h2>Физическая активность</h2>
@@ -363,7 +396,6 @@
       });
     }
 
-    // --- инициализация страницы ---
     if (!DATA[key]) {
       titleEl.textContent = "Раздел в разработке";
       contentEl.innerHTML = "<p>Информация для данной патологии будет добавлена.</p>";
