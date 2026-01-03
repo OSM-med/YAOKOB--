@@ -110,7 +110,7 @@
     }
     .content ul{ padding-left:18px; margin:8px 0 0 0; }
 
-    /* ===== Выбор операции: ТЕПЕРЬ как остальные рамки (без синей заливки) ===== */
+    /* ===== Выбор операции: как остальные рамки ===== */
     .op-wrap{
       display:flex;
       justify-content:center;
@@ -193,9 +193,9 @@
         <div class="question" data-key="rt">Исследования перед госпитализацией для лучевой терапии</div>
         <div class="question" data-key="post_rt">Рекомендации после лучевого лечения</div>
 
+        <!-- ✅ Исправленная формулировка -->
         <div class="question" data-key="followup">
-          Наблюдение после завершения лечения.
-          Какие обследования нужно проходить и с какой периодичностью
+          Наблюдение после завершения лечения: какие обследования нужны и как часто их выполнять?
         </div>
       </div>
     </div>
@@ -248,24 +248,17 @@
             <li>избегать солнечного воздействия</li>
             <li>сообщать врачу о боли, слабости, нарушении глотания</li>
           </ul>
-        `,
-
-        followup: `
-          <h2>Наблюдение после завершения лечения</h2>
-          <ul>
-            <li><strong>1–2 годы:</strong> осмотр каждые 3–6 месяцев</li>
-            <li><strong>3–5 годы:</strong> каждые 6–12 месяцев</li>
-            <li><strong>после 5 лет:</strong> ежегодно</li>
-          </ul>
         `
+        // followup здесь больше не нужен, потому что ведём на отдельную страницу
       }
     };
 
     // ссылки на отдельные страницы
-    const DIET_PAGES = {
-      distal: "diet-distal.html"
-    };
+    const DIET_PAGES = { distal: "diet-distal.html" };
     const ACTIVITY_PAGE = "activity-gastric-postop.html";
+
+    // ✅ страница наблюдения
+    const FOLLOWUP_PAGE = "observation-gastric-followup.html";
 
     const params = new URLSearchParams(window.location.search);
     const key = params.get("p") || "gastric";
@@ -279,10 +272,17 @@
       el.scrollIntoView({ behavior:"smooth", block:"center" });
     }
 
+    function currentReturnUrl(){
+      return window.location.pathname.split("/").pop() + window.location.search;
+    }
+
     function openActivityPage(){
-      // чтобы "Назад" вернуло на pathology.html в тот же контекст
-      const current = window.location.pathname.split("/").pop() + window.location.search;
-      window.location.href = ACTIVITY_PAGE + "?return=" + encodeURIComponent(current);
+      window.location.href = ACTIVITY_PAGE + "?return=" + encodeURIComponent(currentReturnUrl());
+    }
+
+    // ✅ открытие страницы наблюдения (после завершения лечения)
+    function openFollowupPage(){
+      window.location.href = FOLLOWUP_PAGE + "?return=" + encodeURIComponent(currentReturnUrl());
     }
 
     function renderOperationSelector(){
@@ -353,17 +353,15 @@
 
           const sec = btn.dataset.post;
 
-          // ✅ Физическая активность: для всех операций — в отдельный файл
+          // ✅ Физическая активность: отдельный файл
           if (sec === "activity") {
             openActivityPage();
             return;
           }
 
-          // питание для distal — отдельной страницей (как было)
+          // ✅ питание для distal — отдельная страница
           if (sec === "nutrition" && opKey === "distal") {
-            window.location.href = DIET_PAGES.distal + "?return=" + encodeURIComponent(
-              window.location.pathname.split("/").pop() + window.location.search
-            );
+            window.location.href = DIET_PAGES.distal + "?return=" + encodeURIComponent(currentReturnUrl());
             return;
           }
 
@@ -405,6 +403,12 @@
           q.classList.add("active");
 
           const section = q.dataset.key;
+
+          // ✅ Наблюдение после завершения лечения — в отдельный файл
+          if (section === "followup") {
+            openFollowupPage();
+            return;
+          }
 
           if (section === "post_surgery") {
             renderOperationSelector();
