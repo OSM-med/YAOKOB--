@@ -365,15 +365,16 @@
             return;
           }
 
+          // ✅ наблюдение после операции — ведём на observation-gastric-followup.html
+          if (sec === "followup") {
+            openFollowupPage();
+            return;
+          }
+
           // остальное пока заглушки
           if (sec === "meds") {
             postContent.innerHTML = `
               <h2>Лекарственные препараты</h2>
-              <p>Раздел будет заполнен.</p>
-            `;
-          } else if (sec === "followup") {
-            postContent.innerHTML = `
-              <h2>Наблюдение после операции</h2>
               <p>Раздел будет заполнен.</p>
             `;
           } else if (sec === "nutrition") {
